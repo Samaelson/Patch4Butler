@@ -23,12 +23,9 @@ def find_append_to_file(filename, find, insert):
 
 
 def printInfo():
-    print ('Applies additional skirt addon to gcode file.\n')
+    print ('Applies necessary changes for butler at MMU2S to gcode file.\n')
     print ('Syntax:')
-    print ('  GcodeSkirtMultiplier_v002.py Source [Offset] [Skirt Hight]')
-    print ('\n    Source        Gcode file to be patched')
-    print ('    Offset        Value for offset where skirt addon starts\n')
-    print ('    Skirt Hight   Hight of the skirt in mm\n')
+    print ('  Patch4MmuButler.py Source')
     return;
 
 def main(argv):
@@ -70,7 +67,7 @@ def main(argv):
     with open(sourcefile, "w") as out_file:
         for line in buf:
             if line == "; CP WIPE TOWER FIRST LAYER BRIM START\n":
-                line = line + "V1 ;engage filament\nM300\n"
+                line = line + "V1 ;engage filament\n"
             out_file.write(line)
 
     print ('Done!\nPatch process step #2: Disengage for toolchange unload...')
@@ -81,7 +78,7 @@ def main(argv):
     with open(sourcefile, "w") as out_file:
         for line in buf:
             if line == "; CP TOOLCHANGE UNLOAD\n":
-                line = line + "V0 ;disengage filament\nM300\nM300\n"
+                line = line + "V0 ;disengage filament\n"
             out_file.write(line)
 
     print ('Done!\nPatch process step #3: Engage right after toolchange unload...')
@@ -92,7 +89,7 @@ def main(argv):
     with open(sourcefile, "w") as out_file:
         for line in buf:
             if line == "; CP TOOLCHANGE WIPE\n":
-                line = line + "V1 ;engage filament\nM300\n"
+                line = line + "V1 ;engage filament\n"
             out_file.write(line)
 
     print ('Done!\nPatch process step #4: Disengage after print...')
@@ -103,7 +100,7 @@ def main(argv):
     with open(sourcefile, "w") as out_file:
         for line in buf:
             if line == "; Filament-specific end gcode\n":
-                line = line + "V0 ;disengage filament\nM300\nM300\n"
+                line = line + "V0 ;disengage filament\n"
             out_file.write(line)
 
     print ('Done!\nPatch process finished!\n')
