@@ -1,6 +1,6 @@
 # Patch4Butler
 
-This repository contains the post processing script to be called by Slic3r after gcode was generated. The script will patch the gccode file by adding necessary gcode commands used to control butler on MMU2 unit
+This repository contains the post processing script to be called by Slic3r after gcode was generated. The script will patch the gcode file by adding necessary gcode commands used to control butler on MMU2 unit
 
 
 To use a Python post-processing script with Windows, you'll need to adjust the paths like this:
